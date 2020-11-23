@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - volumedb:/var/lib/db
+    env_file:
+      - .env
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  dotnet:
+    build: 
+      context: DotnetWebAPI
+    depends_on: 
+      - db
+    ports: 
+      - 80:80
+    env_file:
+      - .env
+
+volumes:
+  volumedb:
+
+
